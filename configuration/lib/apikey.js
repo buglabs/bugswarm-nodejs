@@ -46,13 +46,12 @@ var ApiKey = function(username, password) {
         request
         .post(type ? url + '/' + type : url)
         .set('Authorization', this.auth)
-        .end(function(err, res) {
+        .end(function(res) {
+            var err;
             if (res.status == 201) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body;
-                }
+                err = res.body;
                 callback(err);
             }
         });
@@ -90,13 +89,12 @@ var ApiKey = function(username, password) {
         request
         .get(type ? url + '/' + type : url)
         .set('Authorization', this.auth)
-        .end(function(err, res) {
+        .end(function(res) {
+            var err;
             if (res.status == 200) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body;
-                }
+                err = res.body;
                 callback(err);
             }
         });

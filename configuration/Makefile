@@ -9,11 +9,10 @@ test:
 		--require should \
 		--reporter $(REPORTER) \
 		--ui bdd \
-		--timeout 60000 \
 		$(SPECS)
 
 install:
-	npm install --dev
+	npm install
 
 jslint:
 	$(JSLINT) $(JSLINT_PARAMS)

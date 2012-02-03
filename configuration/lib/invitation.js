@@ -47,14 +47,13 @@ var Invitation = function(key) {
         request
         .post(this.swarmsUrl + '/' + swarmId + '/invitations')
         .set(apikeyHeader, this.apikey)
-        .data(invitation)
-        .end(function(err, res) {
+        .send(invitation)
+        .end(function(res) {
+            var err;
             if (res.status == 201) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                err = res.body || res.text;
                 callback(err);
             }
         });
@@ -83,13 +82,12 @@ var Invitation = function(key) {
         request
         .get(this.swarmsUrl + '/' + swarmId + '/invitations')
         .set(apikeyHeader, this.apikey)
-        .end(function(err, res) {
+        .end(function(res) {
+            var err;
             if (res.status == 200) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                err = res.body || res.text;
                 callback(err);
             }
         });
@@ -131,13 +129,12 @@ var Invitation = function(key) {
         request
         .get(url)
         .set(apikeyHeader, this.apikey)
-        .end(function(err, res) {
+        .end(function(res) {
+            var err;
             if (res.status == 200) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                err = res.body || res.text;
                 callback(err);
             }
         });
@@ -179,14 +176,13 @@ var Invitation = function(key) {
                 request
                 .put(url)
                 .set(apikeyHeader, this.apikey)
-                .data({status: action})
-                .end(function(err, res) {
+                .send({status: action})
+                .end(function(res) {
+                    var err;
                     if (res.status == 200) {
                         callback(err, res.body);
                     } else {
-                        if (!err) {
-                            err = res.body || res.text;
-                        }
+                        err = res.body || res.text;
                         callback(err);
                     }
                 });

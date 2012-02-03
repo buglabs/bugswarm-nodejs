@@ -35,14 +35,13 @@ var Swarm = function(key) {
         request
         .post(this.url)
         .set(apikeyHeader, this.apikey)
-        .data(data)
-        .end(function(err, res) {
+        .send(data)
+        .end(function(res) {
+            var err;
             if (res.status == 201) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                err = res.body || res.text;
                 callback(err);
             }
         });
@@ -83,14 +82,13 @@ var Swarm = function(key) {
         request
         .put(this.url + '/' + id)
         .set(apikeyHeader, this.apikey)
-        .data(data)
-        .end(function(err, res) {
+        .send(data)
+        .end(function(res) {
+            var err;
             if (res.status == 200) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                err = res.body || res.text;
                 callback(err);
             }
         });
@@ -129,13 +127,12 @@ var Swarm = function(key) {
         request
         .get(id ? url + '/' + id : url)
         .set(apikeyHeader, this.apikey)
-        .end(function(err, res) {
+        .end(function(res) {
+            var err;
             if (res.status == 200) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                err = res.body || res.text;
                 callback(err);
             }
         });
@@ -196,14 +193,13 @@ var Swarm = function(key) {
         request
         .post(this.url + '/' + swarmId + '/resources')
         .set(apikeyHeader, this.apikey)
-        .data(resource)
-        .end(function(err, res) {
+        .send(resource)
+        .end(function(res) {
+            var err;
             if (res.status == 201) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                err = res.body || res.text;
                 callback(err);
             }
         });
@@ -256,14 +252,12 @@ var Swarm = function(key) {
         request
         .del(this.url + '/' + swarmId + '/resources')
         .set(apikeyHeader, this.apikey)
-        .data(resource)
-        .end(function(err, res) {
+        .send(resource)
+        .end(function(res) {
             if (res.status == 204) {
                 callback();
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                var err = res.body || res.text;
                 callback(err);
             }
         });
@@ -312,15 +306,14 @@ var Swarm = function(key) {
 
         request
         .get(this.url + '/' + swarmId + '/resources')
-        .data(data)
+        .send(data)
         .set(apikeyHeader, this.apikey)
-        .end(function(err, res) {
+        .end(function(res) {
+            var err;
             if (res.status == 200) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                err = res.body || res.text;
                 callback(err);
             }
         });
@@ -374,13 +367,12 @@ var Swarm = function(key) {
         request
         .del(this.url + '/' + swarmId)
         .set(apikeyHeader, this.apikey)
-        .end(function(err, res) {
-            if (res.status == 200) {
+        .end(function(res) {
+            var err;
+            if (res.status == 204) {
                 callback(err, res.body);
             } else {
-                if (!err) {
-                    err = res.body || res.text;
-                }
+                err = res.body || res.text;
                 callback(err);
             }
         });

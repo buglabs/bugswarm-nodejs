@@ -8,7 +8,7 @@ describe('Resource service', function(){
     var resourceService;
 
     before(function(done) {
-        apikeyService = new ApiKeyService('librarytest', 'test');
+        apikeyService = new ApiKeyService('librarytest', 'test123');
         apikeyService.generate('configuration',
         function(err, apikey) {
             resourceService = new ResourceService(apikey.key);

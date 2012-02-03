@@ -6,7 +6,7 @@ describe('ApiKey service', function(){
     var partkey;
 
     before(function(done) {
-        apikeyService = new ApiKeyService('librarytest', 'test');
+        apikeyService = new ApiKeyService('librarytest', 'test123');
         done();
     });
 

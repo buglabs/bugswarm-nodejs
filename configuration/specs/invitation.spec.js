@@ -16,8 +16,8 @@ describe('Invitation service', function() {
     var invitationId;
 
     before(function(done) {
-        apikeyService = new ApiKeyService('librarytest', 'test');
-        apikey2Service = new ApiKeyService('librarytest2', 'test');
+        apikeyService = new ApiKeyService('librarytest', 'test123');
+        apikey2Service = new ApiKeyService('librarytest2', 'test123');
 
         apikeyService.generate('configuration',
         function(err, apikey) {
