@@ -1,9 +1,9 @@
 var config = {
     development: {
-        baseurl: 'http://localhost:8005',
+        baseurl: 'http://api.dev.bugswarm.com',
         apikey_header: 'x-bugswarmapikey',
         stream: {
-            host: 'api.dev.bugswarm.net',
+            host: 'api.dev.bugswarm.com',
             port: 80,
             path: '/stream'
         },
@@ -11,21 +11,21 @@ var config = {
     },
 
     integration: {
-        baseurl: 'http://localhost:8005',
+        baseurl: 'http://api.int.bugswarm.com',
         apikey_header: 'x-bugswarmapikey',
         stream: {
-            host: 'localhost',
-            port: 8002,
+            host: 'api.int.bugswarm.com',
+            port: 80,
             path: '/stream'
         },
         debug: true
     },
 
     test: {
-        baseurl: 'http://localhost:8005',
+        baseurl: 'http://api.test.bugswarm.com',
         apikey_header: 'x-bugswarmapikey',
         stream: {
-            host: 'api.test.bugswarm.net',
+            host: 'api.test.bugswarm.com',
             port: 80,
             path: '/stream'
         },
@@ -33,10 +33,10 @@ var config = {
     },
 
     production: {
-        baseurl: 'http://api.bugswarm.net',
+        baseurl: 'http://api.bugswarm.com',
         apikey_header: 'x-bugswarmapikey',
         stream: {
-            host: 'api.bugswarm.net',
+            host: 'api.bugswarm.com',
             port: 80,
             path: '/stream'
         },
