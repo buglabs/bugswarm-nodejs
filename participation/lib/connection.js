@@ -63,30 +63,27 @@ util.inherits(Connection, EventEmitter);
             });
         });
 
-        this.req.connection.on('connect', function() {
-            self.connected = true;
-            self.emit('connect');
-        });
+        this.req.on('socket', function(socket) {
+            socket.on('connect', function() {
+                self.connected = true;
+                self.emit('connect');
+            });
 
-        this.req.connection.on('error', function(err) {
-            console.log('socket connection error: ');
-            console.log(err.stack);
-            //self.emit('error', err);
-        });
+            socket.on('error', function(err) {
+                console.log('socket connection error: ');
+                console.log(err.stack);
+                //self.emit('error', err);
 
-        //in 0.6.x this is going to trigger 'end' only
-        this.req.connection.on('close', function(hadError) {
-            //console.log('socket connection was closed');
-            if(hadError) {
-                console.log('connection closed with error!');
                 console.log('initiating reconnection algorithm...');
                 //TODO Reconnections http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html
                 //TODO use circular queue to reduce the amount
                 //packets being lost when disconnected.
-            } else {
+            });
+
+            socket.on('close', function() {
                 self.connected = false;
                 self.emit('disconnect');
-            }
+            });
         });
 
         //initiates connection
