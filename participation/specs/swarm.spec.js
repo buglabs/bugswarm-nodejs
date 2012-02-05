@@ -67,6 +67,7 @@ describe('Swarm participation API', function() {
         var producer = new Swarm(options);
         producer.on('message', function(message) {
             //we need to fail if this callback gets called.
+            console.log('message -> ' + JSON.stringify(message));
             true.should.be.eql(false);
         });
 
@@ -77,14 +78,17 @@ describe('Swarm participation API', function() {
         });
 
         producer.on('connect', function(err) {
-            producer.disconnect();
+            //producer.disconnect();
         });
 
         producer.on('presence', function(presence) {
+            //console.log('presence -> ' + JSON.stringify(presence));
             presence.from.resource.should.be.eql(resourceId);
+            this.disconnect();
         });
 
         producer.on('disconnect', function() {
+            //console.log('disconnected');
             done();
         });
 
@@ -133,6 +137,7 @@ describe('Swarm participation API', function() {
                     message.public.should.be.eql(true);
                     consumer.disconnect();
                     producer.disconnect();
+                    consumer.removeAllListeners('message');
                     done();
                 });
 
@@ -143,13 +148,11 @@ describe('Swarm participation API', function() {
                 });
 
                 consumer.on('presence', function(presence) {
-                    //console.log(i + ') consumer received -> ' + JSON.stringify(presence));
+                   consumer.send('I should not be able to send this message');
                 });
 
-                consumer.on('connect', function() {
-                    consumer.send('I should not be able to send this message');
-                    //console.log('consumer ' + _resource.id + ' connected!');
-                });
+                consumer.on('disconnect', function() {});
+                consumer.on('connect', function() {});
 
                 consumer.connect();
 
@@ -159,20 +162,19 @@ describe('Swarm participation API', function() {
                 });
 
                 producer.on('presence', function(presence) {
-                    if (presence.from.resource && 
-                        !presence.type && //available
+                    if (presence.from.resource &&
+                        (!presence.type || presence.type == 'available') && //available
                         presence.from.resource == consumerOptions.resource) {
-                        //lets send a message to the consumer once it shows up in
+                        //Sends a message to the consumer once it shows up in
                         //the swarm.
                         producer.send('yo producer 1');
+                        //console.log('producer received -> ' + JSON.stringify(presence));
                     }
-                    //console.log('producer received -> ' + JSON.stringify(presence));
                 });
 
                 producer.on('error', function(err) {
                     //we need to fail if this callback gets called.
                     true.should.be.eql(false);
-                    producer.disconnect();
                 });
 
                 producer.on('connect', function() {
@@ -217,13 +219,15 @@ describe('Swarm participation API', function() {
                     var count = 0;
                     var prosumer = new Swarm(options);
                     prosumer.on('message', function(message) {
-                        message.from.swarm.should.be.eql(swarmId);
-                        message.from.resource.should.be.eql(_resource.id);
-                        message.payload.should.be.eql('yo!');
-                        count++;
-                        if(count == 3) {
-                            prosumer.disconnect();
-                            done();
+                        if (message.from.swarm &&
+                            message.from.swarm == swarmId &&
+                            message.from.resource == _resource.id) {
+                            message.payload.should.be.eql('yo!');
+                            count++;
+                            if(count == 3) {
+                                prosumer.disconnect();
+                                done();
+                            }
                         }
                     });
 
@@ -266,7 +270,7 @@ describe('Swarm participation API', function() {
         var consumer = new Swarm(options2);
 
         prosumer.on('presence', function(presence) {
-            if(presence.from.resource == consumerId) {
+            if (presence.from.resource == consumerId) {
                 for(var i = 0; i < 4; i++) {
                     prosumer.send({ message: 'yo in private!',
                                     swarms: swarmId,
@@ -336,12 +340,12 @@ describe('Swarm participation API', function() {
 
                                 var count = 0;
                                 prosumer.on('presence', function(presence) {
-                                    presence.from.resource.should.be.eql(prosumerId);
-
                                     if (presence.from.swarm == swarm1.id ||
                                         presence.from.swarm == swarm2.id) {
+                                        presence.from.resource.should.be.eql(prosumerId);
+
                                         count++;
-                                        if(count == 2) {
+                                        if (count == 2) {
                                             prosumer.send(count);
                                         }
                                     }
@@ -352,7 +356,7 @@ describe('Swarm participation API', function() {
                                     count2++;
                                     message.from.resource.should.be.eql(prosumerId);
                                     message.payload.should.be.eql(2);
-                                    if(count2 == 2) {
+                                    if (count2 == 2) {
                                         done();
                                         prosumer.disconnect();
                                     }
@@ -366,8 +370,8 @@ describe('Swarm participation API', function() {
         });
     });
 
-    it('should allow unregistered consumers if swarm is public', function(done) {
-        /*var swarmService = new SwarmService(cfgKey);
+    it('should allow unregistered consumers if swarm is public')/*, function(done) {
+        var swarmService = new SwarmService(cfgKey);
 
         //create a public swarm
         var myswarm = {
@@ -405,9 +409,9 @@ describe('Swarm participation API', function() {
             });
 
             consumer.connect();
-        });*/
+        });
         done();
-    });
+    });*/
 
     it('should support sending payloads bigger than 1500 bytes', function(done) {
         var options = {
@@ -422,12 +426,12 @@ describe('Swarm participation API', function() {
         });
 
         var message = '';
-        for(var i = 0; i < 3000; i++) {
+        for (var i = 0; i < 3000; i++) {
             message += i + ',';
         }
 
         prosumer.on('presence', function(presence) {
-            if(presence.from.swarm == swarmId) {
+            if (presence.from.swarm == swarmId) {
                 prosumer.send(message);
             }
         });
@@ -441,7 +445,7 @@ describe('Swarm participation API', function() {
         prosumer.connect();
     });
 
-    it('should not miss messages if connection goes down')
+    it('should not miss messages if connection goes down');
 
-    it('should re-connect if connection goes down')
+    it('should re-connect if connection goes down');
 });

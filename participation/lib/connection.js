@@ -28,7 +28,7 @@ util.inherits(Connection, EventEmitter);
 
         var swarms = options.swarms;
 
-        if(Array.isArray(swarms)) {
+        if (Array.isArray(swarms)) {
             for(var j in swarms) {
                 path += '&swarm_id=' + swarms[j];
             }
@@ -51,12 +51,11 @@ util.inherits(Connection, EventEmitter);
                 if (!chunk.match(/\r\n$/)) {
                     return;
                 }
+
                 try {
                     self.emit('message', JSON.parse(buffer));
                 } catch(e) {
                     console.log(e.stack);
-                    console.log('Malformed message, not a valid JSON ' +
-                    'structure: ---->' + buffer + '<----');
                 } finally {
                     buffer = '';
                 }
@@ -65,19 +64,26 @@ util.inherits(Connection, EventEmitter);
 
         this.req.on('socket', function(socket) {
             socket.on('connect', function() {
+                /**
+                 * GOTCHA!
+                 * There is an issue here
+                 * between the socket and the
+                 * state of http.ClientRequest.
+                 * ClientRequest is in a bad state when socket
+                 * connects causing a hang up
+                 * when users try to send data inmediately
+                 * after 'connect' is emitted.
+                 * We need to make our users aware
+                 * of attempting to send data
+                 * upon presence arrival instead.
+                 **/
                 self.connected = true;
                 self.emit('connect');
             });
 
-            socket.on('error', function(err) {
-                console.log('socket connection error: ');
-                console.log(err.stack);
-                //self.emit('error', err);
-
-                console.log('initiating reconnection algorithm...');
-                //TODO Reconnections http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html
-                //TODO use circular queue to reduce the amount
-                //packets being lost when disconnected.
+            socket.on('end', function(e) {
+                self.connected = false;
+                self.emit('disconnect');
             });
 
             socket.on('close', function() {
@@ -86,12 +92,22 @@ util.inherits(Connection, EventEmitter);
             });
         });
 
+        this.req.on('error', function(err) {
+            throw err;
+            //self.connected = false;
+            //self.emit('disconnect');
+            //console.log('initiating reconnection algorithm...');
+            //TODO Reconnections http://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html
+            //TODO use circular queue to reduce the amount
+            //packets being lost when disconnected.
+        });
+
         //initiates connection
         this.req.write('\n');
     };
 
     this.send = function(message) {
-        if(!this.connected) {
+        if (!this.connected) {
             this.emit('error', {errors:
                 [ { code:'000',
                     description: 'There is not an open connection with ' +
@@ -111,10 +127,8 @@ util.inherits(Connection, EventEmitter);
     };
 
     this.disconnect = function() {
-        try {
+        if (this.connected) {
             this.req.end();
-        } catch(e) {
-            console.log(e.stack);
         }
     };
 }).call(Connection.prototype);

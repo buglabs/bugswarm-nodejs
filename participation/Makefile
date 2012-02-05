@@ -1,4 +1,4 @@
-SPECS = specs/*.js
+SPECS = specs/*.spec.js
 REPORTER = list
 JSLINT   := /usr/local/bin/gjslint
 FIX_STYLE := /usr/local/bin/fixjsstyle
