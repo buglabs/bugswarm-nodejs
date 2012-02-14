@@ -1,5 +1,5 @@
 SPECS = specs/*.js 
-REPORTER = list
+REPORTER = spec
 JSLINT   := /usr/local/bin/gjslint
 FIX_STYLE := /usr/local/bin/fixjsstyle
 JSLINT_PARAMS := --custom_jsdoc_tags public,static --recurse lib/
