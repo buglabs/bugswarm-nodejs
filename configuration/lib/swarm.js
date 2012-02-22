@@ -2,7 +2,7 @@ var request = require('superagent');
 var config = require('../config');
 
 var Swarm = function(key) {
-     if (!key || !key.length) {
+    if (!key || !key.length) {
         throw new TypeError('You must provide an API Key to ' +
         'create an instance of this class.');
     }
