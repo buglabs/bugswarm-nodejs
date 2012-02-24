@@ -64,12 +64,11 @@ describe('ApiKey service', function(){
 
     it('should return an error if key type is invalid', function(done) {
         apikeyService.generate('invalid_type', function(err, key) {
-            Array.isArray(err).should.be.eql(true);
-            err[0].message.should.be.eql('Instance is not one of the possible '+
-            'values');
-            err[0].attribute.should.be.eql('enum');
-            err[0].details[0].should.be.eql('configuration');
-            err[0].details[1].should.be.eql('participation');
+            var errors = err.errors;
+            Array.isArray(errors).should.be.eql(true);
+            errors[0].field.should.be.eql('type');
+            errors[0].description.should.be.eql('Instance is not one of the possible values: configuration,participation');
+            errors[0].code.should.be.eql('enum');
             done();
         });
     });
