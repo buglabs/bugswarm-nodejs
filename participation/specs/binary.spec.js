@@ -97,6 +97,6 @@ describe('Binary API', function() {
             });
         });
 
-        binary.download('commando.jpg');
+        binary.download('librarytest', 'commando.jpg');
     });
 });

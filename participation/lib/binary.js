@@ -46,10 +46,10 @@ util.inherits(Binary, EventEmitter);
         });
     };
 
-    this.download = function(file) {
+    this.download = function(user_id, file) {
         var self = this;
         request
-        .get(self.filesUrl + '/' + file)
+        .get(self.filesUrl + '/' + user_id + '/' + file)
         .set('x-bugswarmapikey', self.apikey)
         .end(function(res) {
             if(res.status != 200) {
