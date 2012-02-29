@@ -66,7 +66,9 @@ describe('Binary API', function() {
         });
 
         binary.on('location', function(location) {
-            location.should.be.eql(config.baseurl + '/files/commando.jpg');
+            location.should.be.eql(config.baseurl + 
+            '/files/librarytest/commando.jpg');
+
             done();
         });
 
