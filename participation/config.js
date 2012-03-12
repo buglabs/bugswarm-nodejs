@@ -5,7 +5,8 @@ var config = {
         stream: {
             host: 'api.dev.bugswarm.com',
             port: 80,
-            path: '/stream'
+            path: '/stream',
+            agent: false
         },
         debug: true
     },
@@ -16,7 +17,8 @@ var config = {
         stream: {
             host: 'api.int.bugswarm.com',
             port: 80,
-            path: '/stream'
+            path: '/stream',
+            agent: false
         },
         debug: true
     },
@@ -27,7 +29,8 @@ var config = {
         stream: {
             host: 'api.test.bugswarm.com',
             port: 80,
-            path: '/stream'
+            path: '/stream',
+            agent: false
         },
         debug: true
     },
@@ -38,7 +41,8 @@ var config = {
         stream: {
             host: 'api.bugswarm.com',
             port: 80,
-            path: '/stream'
+            path: '/stream',
+            agent: false
         },
         debug: false
     }
