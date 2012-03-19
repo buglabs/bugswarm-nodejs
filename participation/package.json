@@ -1,7 +1,7 @@
 {
     "name": "bugswarm-prt",
     "description": "[Participation] BUGswarm is platform that allows you to share and access your hardware sensor data easily and effortlessly.",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "keywords" : [ "m2m", "IoT", "realtime", "messaging", "sensor", "hardware", "socket", "configuration"],
     "homepage": "http://developer.bugswarm.net",
     "author": "BugLabs Inc.",
