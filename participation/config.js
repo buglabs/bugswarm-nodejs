@@ -3,7 +3,7 @@ var config = {
         baseurl: 'http://api.dev.bugswarm.com',
         apikey_header: 'x-bugswarmapikey',
         stream: {
-            host: 'api.dev.bugswarm.com',
+            host: 'stream.dev.bugswarm.com',
             port: 80,
             path: '/stream',
             agent: false
@@ -15,7 +15,7 @@ var config = {
         baseurl: 'http://api.int.bugswarm.com',
         apikey_header: 'x-bugswarmapikey',
         stream: {
-            host: 'api.int.bugswarm.com',
+            host: 'stream.int.bugswarm.com',
             port: 80,
             path: '/stream',
             agent: false
@@ -27,7 +27,7 @@ var config = {
         baseurl: 'http://api.test.bugswarm.com',
         apikey_header: 'x-bugswarmapikey',
         stream: {
-            host: 'api.test.bugswarm.com',
+            host: 'stream.test.bugswarm.com',
             port: 80,
             path: '/stream',
             agent: false
@@ -39,7 +39,7 @@ var config = {
         baseurl: 'http://api.bugswarm.com',
         apikey_header: 'x-bugswarmapikey',
         stream: {
-            host: 'api.bugswarm.com',
+            host: 'stream.bugswarm.com',
             port: 80,
             path: '/stream',
             agent: false
