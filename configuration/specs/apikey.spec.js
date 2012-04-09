@@ -67,8 +67,8 @@ describe('ApiKey service', function(){
             var errors = err.errors;
             Array.isArray(errors).should.be.eql(true);
             errors[0].field.should.be.eql('type');
-            errors[0].description.should.be.eql('Instance is not one of the possible values: configuration,participation');
-            errors[0].code.should.be.eql('enum');
+            errors[0].description.should.be.eql('does not match the regex pattern ^[a-zA-Z0-9]+$');
+            errors[0].code.should.be.eql('CONTRACT_VIOLATION');
             done();
         });
     });
