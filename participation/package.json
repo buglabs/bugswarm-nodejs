@@ -7,12 +7,12 @@
     "author": "BugLabs Inc.",
     "repository": "git://github.com/buglabs/bugswarm-api",
     "engines": {
-        "node": "0.6"
+        "node": ">=0.6"
     },
 
     "devDependencies": {
-        "should": "0.6.0",
-        "mocha": "0.14.1",
+        "should": "1.2.1",
+        "mocha": "1.8.1",
         "bugswarm-cfg": "0.2.2"
     },
 
