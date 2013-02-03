@@ -1,7 +1,7 @@
 {
     "name": "bugswarm-cfg",
     "description": "[Configuration] BUGswarm is platform that allows you to share and access your hardware sensor data easily and effortlessly.",
-    "version": "0.2.2",
+    "version": "0.3.2",
     "keywords" : [ "m2m", "IoT", "realtime", "messaging", "sensor", "hardware", "socket", "configuration"],
     "homepage": "http://developer.bugswarm.net",
     "author": "BugLabs Inc.",
@@ -12,7 +12,7 @@
     "devDependencies": {
         "should": "1.2.1",
         "mocha": "1.8.1",
-        "bugswarm-prt": "0.2.2"
+        "bugswarm-prt": "0.3.2"
     },
     "dependencies": {
         "superagent": "0.3.0"
