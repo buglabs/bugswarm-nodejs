@@ -133,8 +133,8 @@ describe('Usage service', function() {
         };
 
         usageService.get(filter, function(error, data) {
-            Array.isArray(data).should.be.false;
-            Object.keys(data).should.not.be.empty;
+            Array.isArray(data).should.equal(false);
+            Object.keys(data).length.should.not.equal(0);
             data.should.have.property('messages');
             data.messages.should.have.property('sent', 3);
             data.messages.should.have.property('received', 0);
@@ -144,7 +144,7 @@ describe('Usage service', function() {
 
     it('should return the user\'s usage detail', function(done) {
         usageService.get(function(error, data) {
-            Array.isArray(data).should.be.true;
+            Array.isArray(data).should.equal(true);
             data.length.should.be.above(0);
             for(var i in data) {
                 data[i].user_id.should.eql('librarytest');
@@ -162,7 +162,7 @@ describe('Usage service', function() {
 
     it('should return detailed information of the current month if no dates are provided', function(done) {
         usageService.get(function(error, data) {
-            Array.isArray(data).should.be.true;
+            Array.isArray(data).should.equal(true);
             data.length.should.be.above(0);
 
             var now = new Date();

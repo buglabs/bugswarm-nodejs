@@ -44,7 +44,6 @@ of the result.
         var arglen = arguments.length;
 
         if (arglen > 2 || arglen < 1) {
-            var arglen = arguments.length;
             throw new TypeError('Wrong number of arguments. ' +
             'In order to invoke this function you need ' +
             'to provide one or two arguments.');
@@ -61,7 +60,7 @@ of the result.
             filter = arguments[0];
             callback = arguments[1];
 
-            if (typeof filter !== 'object' || 
+            if (typeof filter !== 'object' ||
                 typeof callback !== 'function') {
                 throw new TypeError('When invoking with two ' +
                 'arguments, an object is expected as the first ' +
@@ -73,14 +72,14 @@ of the result.
              * doesn't handle boolean values properly when
              * sending data through the query string.
              **/
-            filter.totalized = filter.totalized ? 'true' : 'false';
+            //filter.totalized = filter.totalized ? 'true' : 'false';
         }
 
         var url = this.url;
 
         request
         .get(url + '/messages')
-        .send(filter)
+        .query(filter)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
             var err;
@@ -91,7 +90,7 @@ of the result.
                 callback(err);
             }
         });
-    }
+    };
 }).call(Usage.prototype);
 
 module.exports = Usage;
