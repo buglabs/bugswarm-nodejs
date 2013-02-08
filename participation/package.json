@@ -1,24 +1,30 @@
 {
-    "name": "bugswarm-prt",
-    "description": "[Participation] BUGswarm is platform that allows you to share and access your hardware sensor data easily and effortlessly.",
-    "version": "0.3.2",
-    "keywords" : [ "m2m", "IoT", "realtime", "messaging", "sensor", "hardware", "socket", "configuration"],
-    "homepage": "http://developer.bugswarm.net",
-    "author": "BugLabs Inc.",
-    "repository": "git://github.com/buglabs/bugswarm-api",
-    "engines": {
-        "node": ">=0.6"
-    },
-
-    "devDependencies": {
-        "should": "1.2.1",
-        "mocha": "1.8.1",
-        "bugswarm-cfg": "0.3.2"
-    },
-
-    "dependencies": {
-        "superagent": "https://github.com/c4milo/superagent/tarball/v0.1.5"
-    },
-
-    "main": "bugswarm-prt"
+  "name": "bugswarm-prt",
+  "description": "[Participation] BUGswarm is platform that allows you to share and access your hardware sensor data easily and effortlessly.",
+  "version": "0.3.3",
+  "keywords": [
+    "m2m",
+    "IoT",
+    "realtime",
+    "messaging",
+    "sensor",
+    "hardware",
+    "socket",
+    "configuration"
+  ],
+  "homepage": "http://developer.bugswarm.net",
+  "author": "BugLabs Inc.",
+  "repository": "git://github.com/buglabs/bugswarm-api",
+  "engines": {
+    "node": ">=0.6"
+  },
+  "devDependencies": {
+    "should": "1.2.1",
+    "mocha": "1.8.1",
+    "bugswarm-cfg": "0.3.3"
+  },
+  "dependencies": {
+    "superagent": "https://github.com/c4milo/superagent/tarball/v0.1.5"
+  },
+  "main": "bugswarm-prt"
 }
