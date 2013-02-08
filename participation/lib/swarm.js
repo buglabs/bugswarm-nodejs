@@ -127,7 +127,7 @@ util.inherits(Swarm, EventEmitter);
 
         if(typeof options === 'object') {
             swarms = options.swarms;
-            message = options.message;
+            message = options.message || options;
             resource = options.resource;
         } else {
             message = options;
