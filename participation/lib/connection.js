@@ -48,16 +48,18 @@ util.inherits(Connection, EventEmitter);
                 chunk = chunk + '';
 
                 buffer += chunk;
-                if (!chunk.match(/\r\n$/)) {
-                    return;
-                }
+                var messages = buffer.split('\r\n');
+                var len = messages.length;
+                if (!len) return;
 
-                try {
-                    self.emit('message', JSON.parse(buffer));
-                } catch(e) {
-                    console.log(e.stack);
-                } finally {
-                    buffer = '';
+                for (var m = 0; m < len; m++) {
+                    var msg = messages[m];
+                    try {
+                        self.emit('message', JSON.parse(msg));
+                    } catch(e) {
+                        buffer = msg;
+                        return;
+                    }
                 }
             });
         });
