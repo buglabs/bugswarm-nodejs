@@ -2,6 +2,8 @@ var SwarmService = require('../lib/swarm');
 var ResourceService = require('../lib/resource');
 var ApiKeyService = require('../lib/apikey');
 
+var should = require('should');
+
 describe('Swarm service', function(){
     var swarmId;
     var resource;
@@ -66,6 +68,8 @@ describe('Swarm service', function(){
             _swarm.public = true;
 
             swarmService.update(_swarm, function(err, swarm) {
+                if (err) {throw err;}
+                should.exist(swarm);
                 swarm.should.be.a('object');
                 swarm.should.have.property('id');
                 swarm.id.should.be.eql(swarmId);
