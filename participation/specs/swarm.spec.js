@@ -50,6 +50,7 @@ describe('Swarm participation API', function() {
                     };
 
                     swarmService.addResource(options, function(err) {
+                        if (err) {throw new Error(err);}
                         done();
                     });
                 });
@@ -78,6 +79,7 @@ describe('Swarm participation API', function() {
         });
 
         producer.on('connect', function(err) {
+            if (err) {throw new Error(err);}
             //producer.disconnect();
         });
 
@@ -106,6 +108,7 @@ describe('Swarm participation API', function() {
         };
 
         resourceService.create(myresource, function(err, _resource) {
+            if (err) {throw new Error(err);}
             var options = {
                 swarm_id: swarmId,
                 resource_id: _resource.id,
@@ -115,6 +118,8 @@ describe('Swarm participation API', function() {
             consumerId = _resource.id;
 
             swarmService.addResource(options, function(err) {
+                if (err) {throw new Error(err);}
+
                 var consumerOptions = {
                     apikey: partKey,
                     resource: _resource.id,
@@ -174,7 +179,7 @@ describe('Swarm participation API', function() {
 
                 producer.on('error', function(err) {
                     //we need to fail if this callback gets called.
-                    true.should.be.eql(false);
+                    throw new Error(err);
                 });
 
                 producer.on('connect', function() {
@@ -206,10 +211,11 @@ describe('Swarm participation API', function() {
             prosumerId = _resource.id;
 
             swarmService.addResource(options, function(err) {
-
+                if (err) {throw new Error(err);}
                 options.resource_type = 'producer';
 
                 swarmService.addResource(options, function(err) {
+                    if (err) {throw new Error(err);}
                     var options = {
                         apikey: partKey,
                         resource: _resource.id,
@@ -243,8 +249,8 @@ describe('Swarm participation API', function() {
                     });
 
                     prosumer.on('error', function(err) {
-                        true.should.be.eql(false);
                         prosumer.disconnect();
+                        throw new Error(err);
                     });
 
                     prosumer.connect();
@@ -302,7 +308,7 @@ describe('Swarm participation API', function() {
     it('should connect, join and send messages to more than one swarm',
     function(done) {
         var swarmService = new SwarmService(cfgKey);
-        var resourceService = new ResourceService(cfgKey);
+        //var resourceService = new ResourceService(cfgKey);
 
         var myswarm = {
             name: 'my swarm',
@@ -311,7 +317,9 @@ describe('Swarm participation API', function() {
         };
 
         swarmService.create(myswarm, function(err, swarm1) {
+            if (err) {throw new Error(err);}
             swarmService.create(myswarm, function(err, swarm2) {
+                if (err) {throw new Error(err);}
                 var options = {
                     swarm_id: swarm1.id,
                     resource_id: prosumerId,
@@ -319,12 +327,16 @@ describe('Swarm participation API', function() {
                 };
 
                 swarmService.addResource(options, function(err) {
+                    if (err) {throw new Error(err);}
                     options.swarm_id = swarm2.id;
                     swarmService.addResource(options, function(err) {
+                        if (err) {throw new Error(err);}
                         options.resource_type = 'consumer';
                         swarmService.addResource(options, function(err) {
+                            if (err) {throw new Error(err);}
                             options.swarm_id = swarm1.id;
                             swarmService.addResource(options, function(err) {
+                                if (err) {throw new Error(err);}
                                 var options = {
                                     apikey: partKey,
                                     resource: prosumerId,
@@ -334,8 +346,9 @@ describe('Swarm participation API', function() {
                                 var prosumer = new Swarm(options);
 
                                 prosumer.on('error', function(err) {
-                                    console.log(err);
-                                    true.should.be.eql(false);
+                                    throw new Error(err);
+                                    //console.log(err);
+                                    //true.should.be.eql(false);
                                 });
 
                                 var count = 0;
@@ -370,7 +383,7 @@ describe('Swarm participation API', function() {
         });
     });
 
-    it('should allow unregistered consumers if swarm is public')/*, function(done) {
+    it('should allow unregistered consumers if swarm is public');/*, function(done) {
         var swarmService = new SwarmService(cfgKey);
 
         //create a public swarm
@@ -445,6 +458,7 @@ describe('Swarm participation API', function() {
         prosumer.connect();
     });
 
+    it('should return an error if the message only contains \r\n');
     it('should not miss messages if connection goes down');
 
     it('should re-connect if connection goes down');
