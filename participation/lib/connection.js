@@ -50,10 +50,15 @@ util.inherits(Connection, EventEmitter);
                 buffer += chunk;
                 var messages = buffer.split('\r\n');
                 var len = messages.length;
-                if (!len) return;
+                if (!len) { return; }
 
                 for (var m = 0; m < len; m++) {
                     var msg = messages[m];
+                    //doesn't emit keepalive packets
+                    if (!msg.trim().length) {
+                        continue;
+                    }
+
                     try {
                         self.emit('message', JSON.parse(msg));
                     } catch(e) {
@@ -61,6 +66,7 @@ util.inherits(Connection, EventEmitter);
                         return;
                     }
                 }
+                buffer = '';
             });
         });
 

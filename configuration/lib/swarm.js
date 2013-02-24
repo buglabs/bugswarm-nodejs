@@ -4,7 +4,7 @@ var config = require('../config');
 var Swarm = function(key) {
     if (!key || !key.length) {
         throw new TypeError('You must provide an API Key to ' +
-        'create an instance of this class.');
+        'create an instance of this function.');
     }
     this.apikey = key;
     this.url = config.baseurl + '/swarms';

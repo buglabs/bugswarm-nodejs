@@ -1,5 +1,7 @@
+'use strict';
+
 var ResourceService = require('../lib/resource');
-var ApiKeyService = require('../lib/apikey');
+var ApiKeyService   = require('../lib/apikey');
 
 describe('Resource service', function(){
     var resourceId;

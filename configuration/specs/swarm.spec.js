@@ -1,10 +1,12 @@
-var SwarmService = require('../lib/swarm');
+'use strict';
+
+var SwarmService    = require('../lib/swarm');
 var ResourceService = require('../lib/resource');
-var ApiKeyService = require('../lib/apikey');
+var ApiKeyService   = require('../lib/apikey');
 
 var should = require('should');
 
-describe('Swarm service', function(){
+describe('Swarm service', function() {
     var swarmId;
     var resource;
 

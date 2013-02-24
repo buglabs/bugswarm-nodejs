@@ -187,7 +187,7 @@ var Invitation = function(key) {
                     }
                 });
             };
-        })(action)
+        })(action);
     }
 }).call(Invitation.prototype);
 
