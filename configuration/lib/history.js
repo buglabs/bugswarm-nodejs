@@ -5,7 +5,7 @@ var request = require('superagent');
 var config = require('../config');
 
 var History = function(key) {
-	if (!key || !key.length) {
+    if (!key || !key.length) {
         throw new TypeError('You must provide an API Key to ' +
         'create an instance of this function.');
     }
@@ -14,10 +14,10 @@ var History = function(key) {
 };
 
 (function() {
-	var apikeyHeader = config.apikey_header;
+    var apikeyHeader = config.apikey_header;
 
-	this.get = function() {
-		var swarms, callback;
+    this.get = function() {
+        var swarms, callback;
 
         var arglen = arguments.length;
         if (arglen !== 2) {
@@ -28,14 +28,14 @@ var History = function(key) {
         swarms = arguments[0];
         swarms = Array.isArray(swarms) ? swarms : [swarms];
         callback = arguments[1];
-		if (typeof callback !== 'function') {
-			throw new TypeError('A callback function is expected as ' +
-			'the second argument.');
+        if (typeof callback !== 'function') {
+            throw new TypeError('A callback function is expected as ' +
+            'the second argument.');
         }
 
         var query = '';
         for (var s = 0, len = swarms.length; s < len; s++) {
-			query += '&swarm_id=' + swarms[s];
+            query += '&swarm_id=' + swarms[s];
         }
 
         var url = this.url;
@@ -45,12 +45,10 @@ var History = function(key) {
         .query(query)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status === 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };

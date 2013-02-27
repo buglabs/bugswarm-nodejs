@@ -1,3 +1,6 @@
+/*jslint node: true */
+'use strict';
+
 var request = require('superagent');
 var config = require('../config');
 
@@ -82,12 +85,10 @@ of the result.
         .query(filter)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
                 callback(err, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };

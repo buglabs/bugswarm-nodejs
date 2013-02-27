@@ -1,7 +1,7 @@
+/*jslint node: true */
+'use strict';
 var request = require('superagent');
 var config = require('../config');
-
-var SwarmService = require('./swarm');
 
 var Invitation = function(key) {
     if (!key || !key.length) {
@@ -49,12 +49,10 @@ var Invitation = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(invitation)
         .end(function(res) {
-            var err;
             if (res.status == 201) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -83,12 +81,10 @@ var Invitation = function(key) {
         .get(this.swarmsUrl + '/' + swarmId + '/invitations')
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -130,12 +126,10 @@ var Invitation = function(key) {
         .get(url)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -178,12 +172,10 @@ var Invitation = function(key) {
                 .set(apikeyHeader, this.apikey)
                 .send({status: action})
                 .end(function(res) {
-                    var err;
                     if (res.status == 200) {
-                        callback(err, res.body);
+                        callback(null, res.body);
                     } else {
-                        err = res.body || res.text;
-                        callback(err);
+                        callback(new Error(res.text));
                     }
                 });
             };

@@ -1,3 +1,5 @@
+/*jslint node: true */
+'use strict';
 var request = require('superagent');
 var config = require('../config');
 
@@ -47,12 +49,10 @@ var ApiKey = function(username, password) {
         .post(type ? url + '/' + type : url)
         .set('Authorization', this.auth)
         .end(function(res) {
-            var err;
             if (res.status == 201) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -90,12 +90,10 @@ var ApiKey = function(username, password) {
         .get(type ? url + '/' + type : url)
         .set('Authorization', this.auth)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };

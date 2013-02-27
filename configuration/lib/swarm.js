@@ -1,3 +1,5 @@
+/*jslint node: true */
+'use strict';
 var request = require('superagent');
 var config = require('../config');
 
@@ -37,12 +39,10 @@ var Swarm = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(data)
         .end(function(res) {
-            var err;
             if (res.status == 201) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -84,12 +84,10 @@ var Swarm = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(data)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -130,10 +128,9 @@ var Swarm = function(key) {
         .end(function(res) {
             var err;
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -195,12 +192,10 @@ var Swarm = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(resource)
         .end(function(res) {
-            var err;
             if (res.status == 201) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -257,8 +252,7 @@ var Swarm = function(key) {
             if (res.status == 204) {
                 callback();
             } else {
-                var err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -309,12 +303,10 @@ var Swarm = function(key) {
         .send(data)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
                 callback(err, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
 
@@ -368,12 +360,10 @@ var Swarm = function(key) {
         .del(this.url + '/' + swarmId)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status == 204) {
                 callback(err, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };

@@ -1,3 +1,6 @@
+/*jslint node: true */
+'use strict';
+
 var request = require('superagent');
 var config = require('../config');
 
@@ -37,12 +40,10 @@ var Resource = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(data)
         .end(function(res) {
-            var err;
             if (res.status == 201) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -83,12 +84,10 @@ var Resource = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(data)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -117,12 +116,10 @@ var Resource = function(key) {
         .get(this.url + '/' + id + '/swarms')
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -162,12 +159,10 @@ var Resource = function(key) {
         .get(id ? url + '/' + id : url)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
@@ -195,12 +190,10 @@ var Resource = function(key) {
         .del(this.url + '/' + id)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status == 204) {
                 callback();
             } else {
-                err = res.body || res.text;
-                callback(err);
+                callback(new Error(res.text));
             }
         });
     };
