@@ -126,7 +126,6 @@ var Swarm = function(key) {
         .get(id ? url + '/' + id : url)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            var err;
             if (res.status == 200) {
                 callback(null, res.body);
             } else {
@@ -304,7 +303,7 @@ var Swarm = function(key) {
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
                 callback(new Error(res.text));
             }
@@ -361,7 +360,7 @@ var Swarm = function(key) {
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
             if (res.status == 204) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
                 callback(new Error(res.text));
             }

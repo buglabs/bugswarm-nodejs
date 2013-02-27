@@ -86,7 +86,7 @@ of the result.
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
             if (res.status == 200) {
-                callback(err, res.body);
+                callback(null, res.body);
             } else {
                 callback(new Error(res.text));
             }
