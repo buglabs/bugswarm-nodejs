@@ -3,6 +3,7 @@
 
 var request = require('superagent');
 var config = require('../config');
+var AppError = require('./app-error');
 
 var Resource = function(key) {
     if (!key || !key.length) {
@@ -40,10 +41,10 @@ var Resource = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(data)
         .end(function(res) {
-            if (res.status == 201) {
+            if (res.status === 201) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -84,10 +85,10 @@ var Resource = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(data)
         .end(function(res) {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -116,10 +117,10 @@ var Resource = function(key) {
         .get(this.url + '/' + id + '/swarms')
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -134,14 +135,14 @@ var Resource = function(key) {
             'maximum two arguments.');
         }
 
-        if (arglen == 1) {
+        if (arglen === 1) {
             callback = arguments[0];
             if (typeof callback !== 'function') {
                 throw new TypeError('When invoking with one argument, a ' +
                 'callback function is expected as the first ' +
                 'argument.');
             }
-        } else if (arglen == 2) {
+        } else if (arglen === 2) {
             id = arguments[0];
             callback = arguments[1];
             if (typeof id !== 'string' ||
@@ -159,10 +160,10 @@ var Resource = function(key) {
         .get(id ? url + '/' + id : url)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -190,10 +191,10 @@ var Resource = function(key) {
         .del(this.url + '/' + id)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            if (res.status == 204) {
+            if (res.status === 204) {
                 callback();
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };

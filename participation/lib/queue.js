@@ -1,3 +1,6 @@
+/*jslint node: true */
+'use strict';
+
 var CircularQueue = module.exports = function(size) {
     this.maxsize = size || 10000;
 };

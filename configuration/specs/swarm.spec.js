@@ -208,7 +208,7 @@ describe('Swarm service', function() {
     it('should destroy a swarm', function(done) {
         swarmService.destroy(swarmId, function(err) {
             swarmService.get(swarmId, function(err, swarm) {
-                var errors = err.errors;
+                var errors = err.toObject().errors;
                 Array.isArray(errors).should.be.eql(true);
                 errors.should.have.length(1);
                 errors[0].description.should.be.eql('Swarm not found.');

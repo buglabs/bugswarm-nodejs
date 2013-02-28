@@ -1,3 +1,6 @@
+/*jslint node: true */
+'use strict';
+
 var bugswarm = require('bugswarm-cfg');
 var ApiKeyService = bugswarm.ApiKeyService;
 var SwarmService = bugswarm.SwarmService;

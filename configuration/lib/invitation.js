@@ -2,6 +2,7 @@
 'use strict';
 var request = require('superagent');
 var config = require('../config');
+var AppError = require('./app-error');
 
 var Invitation = function(key) {
     if (!key || !key.length) {
@@ -49,10 +50,10 @@ var Invitation = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(invitation)
         .end(function(res) {
-            if (res.status == 201) {
+            if (res.status === 201) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -81,10 +82,10 @@ var Invitation = function(key) {
         .get(this.swarmsUrl + '/' + swarmId + '/invitations')
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -99,14 +100,14 @@ var Invitation = function(key) {
             'maximum two arguments.');
         }
 
-        if (arglen == 1) {
+        if (arglen === 1) {
             callback = arguments[0];
             if (typeof callback !== 'function') {
                 throw new TypeError('When invoking with one argument, a ' +
                 'callback function is expected as the first ' +
                 'argument.');
             }
-        } else if (arglen == 2) {
+        } else if (arglen === 2) {
             resourceId = arguments[0];
             callback = arguments[1];
             if (typeof resourceId !== 'string' ||
@@ -126,10 +127,10 @@ var Invitation = function(key) {
         .get(url)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -172,10 +173,10 @@ var Invitation = function(key) {
                 .set(apikeyHeader, this.apikey)
                 .send({status: action})
                 .end(function(res) {
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         callback(null, res.body);
                     } else {
-                        callback(new Error(res.text));
+                        callback(new AppError(res.text));
                     }
                 });
             };

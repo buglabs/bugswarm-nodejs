@@ -1,6 +1,9 @@
-var util = require('util');
-var EventEmitter = require('events').EventEmitter;
-var Connection = require('./connection');
+/*jslint node: true */
+'use strict';
+
+var util            = require('util');
+var EventEmitter    = require('events').EventEmitter;
+var Connection      = require('./connection');
 
 var Swarm = function(options) {
     this.conn = new Connection();

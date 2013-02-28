@@ -1,3 +1,5 @@
+/*jslint node: true */
+'use strict';
 var ApiKeyService = require('../lib/apikey');
 
 describe('ApiKey service', function(){
@@ -64,7 +66,7 @@ describe('ApiKey service', function(){
 
     it('should return an error if key type is invalid', function(done) {
         apikeyService.generate('invalid_type', function(err, key) {
-            var errors = err.errors;
+            var errors = err.toObject().errors;
             Array.isArray(errors).should.be.eql(true);
             errors[0].field.should.be.eql('type');
             errors[0].description.should.be.eql('does not match the regex pattern ^[a-zA-Z0-9]+$');
@@ -130,7 +132,7 @@ describe('ApiKey service', function(){
     it('should return an error if credentials are invalid', function(done) {
         var apikeyService = new ApiKeyService('foo', 'bar');
         apikeyService.get(function(err, keys) {
-            var errors = err.errors;
+            var errors = err.toObject().errors;
             Array.isArray(errors).should.be.eql(true);
             errors[0].code.should.be.eql('058');
             errors[0].description.should.be.eql('Invalid credentials.');

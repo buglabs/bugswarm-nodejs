@@ -1,8 +1,11 @@
-var util = require('util');
-var fs = require('fs');
-var EventEmitter = require('events').EventEmitter;
-var config = require('../config');
-var request = require('superagent');
+/*jslint node: true */
+'use strict';
+
+var util            = require('util');
+var fs              = require('fs');
+var EventEmitter    = require('events').EventEmitter;
+var config          = require('../config');
+var request         = require('superagent');
 
 var Binary = function(key) {
     if (!key || !key.length) {
@@ -38,7 +41,7 @@ util.inherits(Binary, EventEmitter);
             .part('file', file)
             .end(function(res) {
                 if (res.status != 201) {
-                    self.emit('error', req.body.errors);
+                    self.emit('error', res.body.errors);
                 } else {
                     self.emit('location', res.header['location']);
                 }

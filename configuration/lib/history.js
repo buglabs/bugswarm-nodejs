@@ -3,6 +3,7 @@
 
 var request = require('superagent');
 var config = require('../config');
+var AppError = require('./app-error');
 
 var History = function(key) {
     if (!key || !key.length) {
@@ -48,7 +49,7 @@ var History = function(key) {
             if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };

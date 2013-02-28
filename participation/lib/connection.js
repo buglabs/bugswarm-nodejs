@@ -1,6 +1,9 @@
-var EventEmitter = require('events').EventEmitter;
-var Queue = require('./queue');
-var config = require('../config');
+/*jslint node: true */
+'use strict';
+
+var EventEmitter    = require('events').EventEmitter;
+var Queue           = require('./queue');
+var config          = require('../config');
 
 var http = require('http');
 var util = require('util');

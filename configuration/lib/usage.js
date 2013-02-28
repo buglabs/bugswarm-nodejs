@@ -3,6 +3,7 @@
 
 var request = require('superagent');
 var config = require('../config');
+var AppError = require('./app-error');
 
 var Usage = function(key) {
   if (!key || !key.length) {
@@ -52,14 +53,14 @@ of the result.
             'to provide one or two arguments.');
         }
 
-        if (arglen == 1) {
+        if (arglen === 1) {
             callback = arguments[0];
             if (typeof callback !== 'function') {
                 throw new TypeError('When invoking with one ' +
                 'argument, a callback function is expected.');
 
             }
-        } else if (arglen == 2) {
+        } else if (arglen === 2) {
             filter = arguments[0];
             callback = arguments[1];
 
@@ -85,10 +86,10 @@ of the result.
         .query(filter)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };

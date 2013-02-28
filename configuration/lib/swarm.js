@@ -2,6 +2,7 @@
 'use strict';
 var request = require('superagent');
 var config = require('../config');
+var AppError = require('./app-error');
 
 var Swarm = function(key) {
     if (!key || !key.length) {
@@ -39,10 +40,10 @@ var Swarm = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(data)
         .end(function(res) {
-            if (res.status == 201) {
+            if (res.status === 201) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -84,10 +85,10 @@ var Swarm = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(data)
         .end(function(res) {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -102,13 +103,13 @@ var Swarm = function(key) {
             'maximum two arguments.');
         }
 
-        if (arglen == 1) {
+        if (arglen === 1) {
             callback = arguments[0];
             if (typeof callback !== 'function') {
                 throw new TypeError('When invoking with one argument, a ' +
                 'callback function is expected.');
             }
-        } else if (arglen == 2) {
+        } else if (arglen === 2) {
             id = arguments[0];
             callback = arguments[1];
             if (typeof id !== 'string' ||
@@ -126,10 +127,10 @@ var Swarm = function(key) {
         .get(id ? url + '/' + id : url)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -191,10 +192,10 @@ var Swarm = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(resource)
         .end(function(res) {
-            if (res.status == 201) {
+            if (res.status === 201) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -248,10 +249,10 @@ var Swarm = function(key) {
         .set(apikeyHeader, this.apikey)
         .send(resource)
         .end(function(res) {
-            if (res.status == 204) {
+            if (res.status === 204) {
                 callback();
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -266,7 +267,7 @@ var Swarm = function(key) {
             'maximum three arguments.');
         }
 
-        if (arglen == 2) {
+        if (arglen === 2) {
             swarmId = arguments[0];
             callback = arguments[1];
             if (typeof swarmId !== 'string' ||
@@ -276,7 +277,7 @@ var Swarm = function(key) {
                 'swarm id string is expected as the first argument and a callback ' +
                 'function as the second.');
             }
-        } else if (arglen == 3) {
+        } else if (arglen === 3) {
             swarmId = arguments[0];
             resourceType = arguments[1];
             callback = arguments[2];
@@ -302,10 +303,10 @@ var Swarm = function(key) {
         .send(data)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            if (res.status == 200) {
+            if (res.status === 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
 
@@ -359,10 +360,10 @@ var Swarm = function(key) {
         .del(this.url + '/' + swarmId)
         .set(apikeyHeader, this.apikey)
         .end(function(res) {
-            if (res.status == 204) {
+            if (res.status === 204) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };

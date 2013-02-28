@@ -2,6 +2,7 @@
 'use strict';
 var request = require('superagent');
 var config = require('../config');
+var AppError = require('./app-error');
 
 var ApiKey = function(username, password) {
      if (!username || !username.length ||
@@ -52,7 +53,7 @@ var ApiKey = function(username, password) {
             if (res.status == 201) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
@@ -93,7 +94,7 @@ var ApiKey = function(username, password) {
             if (res.status == 200) {
                 callback(null, res.body);
             } else {
-                callback(new Error(res.text));
+                callback(new AppError(res.text));
             }
         });
     };
