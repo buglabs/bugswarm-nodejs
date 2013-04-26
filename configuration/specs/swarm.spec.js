@@ -212,7 +212,7 @@ describe('Swarm service', function() {
                 var errors = err.toObject().errors;
                 Array.isArray(errors).should.be.eql(true);
                 errors.should.have.length(1);
-                errors[0].description.should.be.eql('Swarm not found.');
+                errors[0].description.should.be.eql('Swarm not found');
                 done();
             });
         });

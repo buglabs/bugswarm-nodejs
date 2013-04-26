@@ -1,3 +1,6 @@
+/*jslint node: true */
+'use strict';
+
 var SwarmService = require('../lib/swarm');
 var ResourceService = require('../lib/resource');
 var ApiKeyService = require('../lib/apikey');
@@ -5,6 +8,8 @@ var UsageService = require('../lib/usage');
 
 var bugswarmprt = require('bugswarm-prt');
 var Prosumer = bugswarmprt.Swarm;
+
+var should = require('should');
 
 describe('Usage service', function() {
     var swarmId;
@@ -23,7 +28,7 @@ describe('Usage service', function() {
         apikeyService = new ApiKeyService('librarytest', 'test123');
         apikeyService.generate(function(err, keys) {
             for(var i in keys) {
-                if(keys[i].type == 'configuration') {
+                if(keys[i].type === 'configuration') {
                     cfgKey = keys[i].key;
                 } else {
                     prtKey = keys[i].key;
@@ -84,7 +89,7 @@ describe('Usage service', function() {
 
         var prosumer = new Prosumer(options);
         prosumer.on('error', function(err) {
-            assert.isUndefined(err);
+            should.not.exist(err);
             prosumer.disconnect();
         });
 
@@ -99,7 +104,7 @@ describe('Usage service', function() {
 
         var j = 1;
         prosumer.on('message', function(message) {
-            if (j == 3) {
+            if (j === 3) {
                 prosumer.disconnect();
             }
             j++;
@@ -151,8 +156,7 @@ describe('Usage service', function() {
             }
 
             ['resource_id', 'swarm_id',
-            'timestamp', 'user_id',
-            'bytes', 'messages'].forEach(function(p) {
+            'timestamp', 'user_id', 'messages'].forEach(function(p) {
                 data[0].should.have.property(p);
             });
 

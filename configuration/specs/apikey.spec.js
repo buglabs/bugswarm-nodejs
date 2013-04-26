@@ -134,7 +134,7 @@ describe('ApiKey service', function(){
         apikeyService.get(function(err, keys) {
             var errors = err.toObject().errors;
             Array.isArray(errors).should.be.eql(true);
-            errors[0].code.should.be.eql('058');
+            errors[0].code.should.be.eql('invalid-credentials');
             errors[0].description.should.be.eql('Invalid credentials.');
             done();
         });

@@ -1,3 +1,6 @@
+/*jslint node: true */
+'use strict';
+
 var bugswarm = require('bugswarm-cfg');
 var ApiKeyService = bugswarm.ApiKeyService;
 var SwarmService = bugswarm.SwarmService;
@@ -19,9 +22,9 @@ describe('Binary API', function() {
         var apikeyService = new ApiKeyService('librarytest', 'test123');
         apikeyService.generate(function(err, data) {
             for(var i = 0, len = data.length; i < len; i++) {
-                if(data[i].type == 'configuration') {
+                if(data[i].type === 'configuration') {
                     cfgKey = data[i].key;
-                } else if(data[i].type == 'participation') {
+                } else if(data[i].type === 'participation') {
                     partKey = data[i].key;
                 }
             }
@@ -66,7 +69,7 @@ describe('Binary API', function() {
         });
 
         binary.on('location', function(location) {
-            location.should.be.eql(config.baseurl + 
+            location.should.be.eql(config.baseurl +
             '/files/librarytest/commando.jpg');
 
             done();

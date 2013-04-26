@@ -102,7 +102,7 @@ describe('Resource service', function(){
                 var errors = err.toObject().errors;
                 Array.isArray(errors).should.be.eql(true);
                 errors[0].should.be.a('object');
-                errors[0].description.should.be.eql('Resource not found.');
+                errors[0].description.should.be.eql('Resource not found');
                 done();
             });
         });
