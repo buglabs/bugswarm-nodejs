@@ -1,13 +1,14 @@
 /*jslint node: true */
 'use strict';
 
-var bugswarm = require('bugswarm-cfg');
-var ApiKeyService = bugswarm.ApiKeyService;
-var SwarmService = bugswarm.SwarmService;
+var bugswarm        = require('bugswarm-cfg');
+var ApiKeyService   = bugswarm.ApiKeyService;
+var SwarmService    = bugswarm.SwarmService;
 var ResourceService = bugswarm.ResourceService;
-var config = require('../config');
-var crypto = require('crypto');
-var fs = require('fs');
+var config          = require('../config');
+var crypto          = require('crypto');
+var fs              = require('fs');
+var should          = require('should');
 
 var Binary = require('../bugswarm-prt').Binary;
 
@@ -21,6 +22,7 @@ describe('Binary API', function() {
     before(function(done) {
         var apikeyService = new ApiKeyService('librarytest', 'test123');
         apikeyService.generate(function(err, data) {
+            should.not.exist(err);
             for(var i = 0, len = data.length; i < len; i++) {
                 if(data[i].type === 'configuration') {
                     cfgKey = data[i].key;
