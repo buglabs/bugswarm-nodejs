@@ -6,6 +6,5 @@ module.exports = {
     ResourceService: require('./resource'),
     InvitationService: require('./invitation'),
     ApiKeyService: require('./apikey'),
-    UsageService: require('./usage'),
-    HistoryService: require('./history')
+    UsageService: require('./usage')
 };
