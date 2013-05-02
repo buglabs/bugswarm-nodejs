@@ -294,7 +294,7 @@ var Swarm = function(key) {
         }
 
         var data = {};
-        if(resourceType) {
+        if (resourceType) {
             data.type = resourceType;
         }
 
@@ -309,7 +309,39 @@ var Swarm = function(key) {
                 callback(new AppError(res.text));
             }
         });
+    };
 
+    this.logs = function() {
+        var swarmId, callback;
+
+        var arglen = arguments.length;
+        if (arglen < 2) {
+            throw new TypeError('Wrong number of arguments. In order to ' +
+            'invoke this function you need to provide at least two arguments.');
+        }
+
+        if (arglen === 2) {
+            swarmId = arguments[0];
+            callback = arguments[1];
+            if (typeof swarmId !== 'string' ||
+                !swarmId.length ||
+                typeof callback !== 'function') {
+                throw new TypeError('When invoking with two arguments, a ' +
+                'swarm id string is expected as the first argument and a callback ' +
+                'function as the second.');
+            }
+        }
+
+        request
+        .get(this.url + '/' + swarmId + '/logs')
+        .set(apikeyHeader, this.apikey)
+        .end(function(res) {
+            if (res.status === 200) {
+                callback(null, res.body);
+            } else {
+                callback(new AppError(res.text));
+            }
+        });
     };
 
     /*this.invite = function() {

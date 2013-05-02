@@ -7,9 +7,13 @@ var ApiKeyService   = require('../lib/apikey');
 
 var should = require('should');
 
+var Swarm = require('bugswarm-prt').Swarm;
+
 describe('Swarm service', function() {
     var swarmId;
     var resource;
+    var partKey;
+    var cfgKey;
 
     var apikeyService;
     var swarmService;
@@ -17,10 +21,16 @@ describe('Swarm service', function() {
 
     before(function(done) {
         apikeyService = new ApiKeyService('librarytest', 'test123');
-        apikeyService.generate('configuration',
-        function(err, data) {
-            swarmService = new SwarmService(data.key);
-            resourceService = new ResourceService(data.key);
+        apikeyService.generate(function(err, data) {
+             for(var i = 0, len = data.length; i < len; i++) {
+                if(data[i].type === 'configuration') {
+                    cfgKey = data[i].key;
+                } else if(data[i].type === 'participation') {
+                    partKey = data[i].key;
+                }
+            }
+            swarmService = new SwarmService(cfgKey);
+            resourceService = new ResourceService(cfgKey);
             done();
         });
     });
@@ -29,7 +39,12 @@ describe('Swarm service', function() {
         var data = {
             name: 'my swarm',
             public: false,
-            description: 'my swarm description'
+            description: 'my swarm description',
+            configurations: {
+                history: {
+                    enabled: true
+                }
+            }
         };
 
         swarmService.create(data, function(err, swarm) {
@@ -200,6 +215,50 @@ describe('Swarm service', function() {
                 done();
             });
         });
+    });
+
+    it('should provide message logs from a given swarm', function(done) {
+        var options = {
+            apikey: partKey,
+            resource: resource.id,
+            swarms: swarmId
+        };
+
+        var producer = new Swarm(options);
+
+        producer.on('error', function(err) {
+            throw new Error(err);
+        });
+
+        producer.on('connect', function(err) {
+            if (err) {throw new Error(err);}
+            producer.send('yo in history!');
+            producer.disconnect();
+        });
+
+        producer.on('disconnect', function() {
+            /**
+            * This timeout gives some time to bugswarm-api
+            * to save the logs. Saving history in bugswarm
+            * happens asynchrounously, so at the time
+            * of receiving the disconnect event
+            * the log may not be saved yet in the database.
+            */
+            setTimeout(function() {
+                var swarmService = new SwarmService(cfgKey);
+                swarmService.logs(swarmId, function(err, logs) {
+                    if (err) { throw err; }
+                    Array.isArray(logs).should.equal(true);
+                    logs.length.should.equal(1);
+                    logs[0].user_id.should.equal('librarytest');
+                    logs[0].resource_id.should.equal(resource.id);
+                    logs[0].message.payload.should.equal('yo in history!');
+                    done();
+                });
+            }, 500);
+        });
+
+        producer.connect();
     });
 
     /*it('should send invitations', function(done) {
