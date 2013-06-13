@@ -10,11 +10,11 @@ var config = {
         debug: true
     },
 
-    integration: {
-        baseurl: 'http://api.int.bugswarm.com',
+    staging: {
+        baseurl: 'http://api.staging.bugswarm.com',
         apikey_header: 'x-bugswarmapikey',
         stream: {
-            host: 'api.int.bugswarm.com',
+            host: 'api.staging.bugswarm.com',
             port: 80,
             path: '/stream'
         },
