@@ -150,7 +150,7 @@ describe('Swarm participation API', function() {
                 });
 
                 consumer.on('error', function(err) {
-                    err[0].code.should.be.eql('056');
+                    err[0].code.should.be.eql('producing-not-authorized');
                     err[0].description.should.be.eql('Resource ' + consumerOptions.resource +
                     ' is not authorized to produce data in swarm ' + consumerOptions.swarms + '.');
                 });
