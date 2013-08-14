@@ -36,6 +36,7 @@ describe('Invitation service', function() {
                 };
 
                 swarmService.create(data, function(err, swarm) {
+                    if (err) { throw err; }
                     swarm.should.have.property('id');
                     swarmId = swarm.id;
 
