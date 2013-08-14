@@ -1,5 +1,6 @@
-/*jslint node: true */
 'use strict';
+
+var util = require('util');
 
 function AppError(str) {
     this.str = str;
@@ -7,6 +8,8 @@ function AppError(str) {
     Error.call(this);
     Error.captureStackTrace(this, AppError);
 }
+
+util.inherits(AppError, Error);
 
 AppError.prototype.toString = function() {
     return this.str;
