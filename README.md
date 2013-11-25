@@ -15,10 +15,10 @@ These packages are an implementation of
 * Sends and receives binary files.
 
 ### Installation
-#### [Configuration package](https://github.com/buglabs/bugswarm-api/tree/master/nodejs/configuration)
+#### [Configuration package](https://github.com/buglabs/bugswarm-nodejs/tree/master/nodejs/configuration)
 `npm install bugswarm-cfg`
 
-#### [Participation package](https://github.com/buglabs/bugswarm-api/tree/master/nodejs/participation)
+#### [Participation package](https://github.com/buglabs/bugswarm-nodejs/tree/master/participation)
 `npm install bugswarm-prt`
 
 
@@ -30,7 +30,7 @@ git clone git@github.com:buglabs/bugswarm-api.git && cd bugswarm-api/nodejs
 ## License
 (The MIT License)
 
-Copyright 2011 BugLabs. All rights reserved.
+Copyright 2013 BugLabs. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to
