@@ -15,7 +15,7 @@ These packages are an implementation of
 * Sends and receives binary files.
 
 ### Installation
-#### [Configuration package](https://github.com/buglabs/bugswarm-nodejs/tree/master/nodejs/configuration)
+#### [Configuration package](https://github.com/buglabs/bugswarm-nodejs/tree/master/configuration)
 `npm install bugswarm-cfg`
 
 #### [Participation package](https://github.com/buglabs/bugswarm-nodejs/tree/master/participation)
