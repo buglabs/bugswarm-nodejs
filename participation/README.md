@@ -17,73 +17,49 @@ This library is an implementation of
 
 ### Usage example
 
-####Consuming data:
+####Producing and consuming data:
 
 ```javascript
-var SwarmConnection = require('bugswarm-prt');
+var Swarm = require('bugswarm-prt').Swarm;
 
 var options = {
     apikey: 'YOUR PARTICIPATION API KEY',
-    resource: 'YOUR RESOURCE ID',
-    //Keep in mind that your resource has to be a participant in all of these swarms.
-    swarms: ['SWARM ID 1', 'SWARM ID 2'] 
+    resource: 'YOUR RESOURCE ID WITH PERMISSIONS TO CONSUME AND PRODUCE',
+    swarms: ['YOUR SWARM ID']
 };
 
-var consumer = new SwarmConnection(options);
-consumer.on('message', function(message) {
-    console.log('message: ' + message);
+var prosumer = new Swarm(options);
+
+prosumer.on('message', function(message) {
+    console.log('message: ' + JSON.stringify(message));
 });
 
-consumer.on('error', function(err) {
+prosumer.on('error', function(err) {
     console.log(err);
 });
 
-consumer.on('connect', function(err) {
-    console.log('Connected to the platform');
+prosumer.on('connect', function(err) {
+    console.log('Connected!');
+
+    //Let's start sending random temperatures
+    //from Central Park!
+    setInterval(function() {
+        prosumer.send(JSON.stringify({
+            'temperature': Math.floor((Math.random() * 100) + 1)
+        }));
+    }, 2000);
 });
 
-consumer.on('presence', function(presence) {
-    console.log('presence: ' + presence);
+prosumer.on('presence', function(presence) {
+    console.log('presence: ' + JSON.stringify(presence));
 });
 
-consumer.on('disconnect', function() {
+prosumer.on('disconnect', function() {
     console.log('disconnected');
 });
 
-//here is where the magic starts
-consumer.connect();
-
-```
-
-####Producing data:
-
-```javascript
-var SwarmConnection = require('bugswarm-prt');
-
-var options = {
-    apikey: 'YOUR PARTICIPATION API KEY',
-    resource: 'YOUR RESOURCE ID',
-    //Keep in mind that your resource has to be a participant in all of these swarms.
-    swarms: ['SWARM ID 1', 'SWARM ID 2'] 
-};
-
-var producer = new SwarmConnection(options);
-var interval;
-
-producer.on('connect', function(err) {
-    /**
-     * Sends a public message every 1 second.
-     **/
-    interval = setInterval(function() {
-        producer.send('yo! in public');
-    }, 1000);  
-});
-
-producer.on('disconnect', function() {
-    clearInterval(interval);
-});
-
-producer.connect();
+//here is where the execution flow starts
+prosumer.connect();
 
 ```
 
@@ -92,13 +68,13 @@ for more comprehensive usage, at the [specs](https://github.com/buglabs/bugswarm
 
 ### Fork it, improve it and send us pull requests.
 ```shell
-git clone git@github.com:buglabs/bugswarm-api.git && cd bugswarm-api/nodejs/participation
+git clone git@github.com:buglabs/bugswarm-nodejs.git && cd bugswarm-nodejs/participation
 ```
 
 ## License
 (The MIT License)
 
-Copyright 2011 BugLabs. All rights reserved.
+Copyright 2013 BugLabs. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to
