@@ -64,7 +64,7 @@ prosumer.connect();
 ```
 
 Take a look at the [documentation]() for details about the library API and, 
-for more comprehensive usage, at the [specs](https://github.com/buglabs/bugswarm-api/tree/master/nodejs/participation/specs) directory. 
+for more comprehensive usage, at the [specs](https://github.com/buglabs/bugswarm-nodejs/tree/master/participation/specs) directory. 
 
 ### Fork it, improve it and send us pull requests.
 ```shell
